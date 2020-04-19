@@ -11,3 +11,5 @@ enqueue!(q, 2)
 @test dequeue!(q) == 1
 @test dequeue!(q) == 2
 @test isempty(q) == true
+
+@test_throws Exception dequeue!(q)
