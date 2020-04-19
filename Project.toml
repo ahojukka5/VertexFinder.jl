@@ -1,0 +1,4 @@
+name = "VertexFinder"
+uuid = "c0d8f697-7833-4eed-a9bd-1f3da4013f1a"
+authors = ["Jukka Aho <ahojukka5@gmail.com>"]
+version = "0.1.0"
