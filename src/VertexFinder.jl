@@ -39,4 +39,49 @@ function dequeue!(q::Queue)
     return item
 end
 
+"""
+    find(G, v)
+
+Find a better estimate of a pseudoperipheral vertex `w` of graph `G`, starting
+from a vertex `v`. George-Liu algorithm is used to find pseudoperipheral vertex.
+"""
+function find(G, v)
+    n = length(G)
+
+    queue = Queue(Int, n)
+    visited = zeros(Bool, n)
+    dist = zeros(Int, n)
+
+    enqueue!(queue, v)
+    visited[v] = true
+
+    n = 0
+    while !isempty(queue)
+        n += 1
+        v = dequeue!(queue)
+        adjacent_vertices = getindex(G, v)
+        for w in adjacent_vertices
+            visited[w] && continue
+            visited[w] = true
+            enqueue!(queue, w)
+            dist[w] = dist[v] + 1
+        end
+    end
+
+    maxdist = maximum(dist)
+    mindeg = 2^32
+    w = -1
+
+    for i=1:n
+        dist[i] != maxdist && continue
+        deg = length(G[i])
+        if deg < mindeg
+            mindeg = deg
+            w = i
+        end
+    end
+
+    return w
+end
+
 end # module
